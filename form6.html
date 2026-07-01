@@ -410,6 +410,11 @@
           <input class="field-value" type="text" id="hmaddah_${mid}_${hid}" placeholder="مثال: الفقه"
             value="${esc(clone && clone.maddah || '')}" />
         </div>
+        <div class="field">
+          <label class="field-label">من / إلى <span class="opt-tag">(اختياري)</span></label>
+          <input class="field-value" type="text" id="hfromto_${mid}_${hid}" placeholder="مثال: صفحة ١٢ — ٢٥ ..."
+            value="${esc(clone && clone.fromTo || '')}" />
+        </div>
         <div class="hissa-grid">
           <div class="field">
             <label class="field-label">الحضور <span class="opt-tag">(اختياري)</span></label>
@@ -454,6 +459,7 @@
     const g = id => (document.getElementById(id) || {}).value || '';
     return {
       maddah:  g(`hmaddah_${mid}_${hid}`),
+      fromTo:  g(`hfromto_${mid}_${hid}`),
       present: g(`hpresent_${mid}_${hid}`),
       absent:  g(`habsent_${mid}_${hid}`),
       notes:   g(`hnotes_${mid}_${hid}`),

@@ -261,6 +261,10 @@
     .pf-cover-card-stat { display: flex; align-items: center; gap: 4px; }
     .pf-cover-card-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .pf-cover-no-data   { font-size: 11px; color: #bbb; font-style: italic; }
+    .pf-missing-box { margin-top: 18px; border: 1.5px solid #F5C2C2; border-radius: 10px; overflow: hidden; }
+    .pf-missing-head { background: #FEF0F0; padding: 9px 14px; font-size: 12px; font-weight: 700; color: #B03030; }
+    .pf-missing-list { padding: 8px 14px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .pf-missing-tag  { background: #FEF0F0; border: 1px solid #F5C2C2; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #B03030; font-weight: 600; }
 
     /* Per-responder pages */
     .pf-responder { page-break-before: always; padding-top: 0.4rem; }
@@ -568,7 +572,7 @@
       const res  = await fetch(url, { redirect: 'follow' });
       const json = await res.json();
       if (json.status !== 'ok') throw new Error(json.message || 'خطأ غير معروف');
-      renderPrintArea(json.data, dateFrom, dateTo, selected.map(Number));
+      renderPrintArea(json.data, dateFrom, dateTo, selected.map(Number), json.users || []);
       showExpStatus('✅ جاهز. جاري فتح نافذة الطباعة...', '#0F6E56');
       setTimeout(() => window.print(), 400);
     } catch (err) {
@@ -649,7 +653,7 @@
     return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
   }
 
-  function renderPrintArea(data, dateFrom, dateTo, selectedNums) {
+  function renderPrintArea(data, dateFrom, dateTo, selectedNums, allUsers) {
     const area = document.getElementById('printArea');
     area.innerHTML = '';
 
@@ -671,6 +675,7 @@
     const cardsWrap = cover.querySelector('#pfCoverCards');
 
     const formRenderList = [];
+    const allResponders = new Set();
 
     selectedNums.forEach(num => {
       const meta  = FORM_REGISTRY[num - 1];
@@ -687,6 +692,7 @@
         const name = String(row[RESPONDER_COL] || '').trim() || '(بدون اسم)';
         if (!grouped[name]) { grouped[name] = []; order.push(name); }
         grouped[name].push(row);
+        allResponders.add(name);
       });
 
       // Cover card
@@ -715,6 +721,19 @@
       if (order.length) formRenderList.push({ meta, headers, rows, order, grouped });
     });
 
+    /* ── Missing users on cover ── */
+    if (allUsers && allUsers.length) {
+      const missing = allUsers.filter(u => !allResponders.has(u.full_name));
+      if (missing.length) {
+        const box = document.createElement('div');
+        box.className = 'pf-missing-box';
+        box.innerHTML = `
+          <div class="pf-missing-head">لم يملأ استمارة (${missing.length})</div>
+          <div class="pf-missing-list">${missing.map(u => `<span class="pf-missing-tag">${u.full_name}</span>`).join('')}</div>`;
+        cover.appendChild(box);
+      }
+    }
+
     /* ── Per-form pages ── */
     formRenderList.forEach(({ meta, headers, rows, order, grouped }) => {
       if (meta.sheet === 'برنامج الأعمال اليوميّة') {
@@ -727,9 +746,9 @@
 
   /* ── Form 1 special rendering ─────────────────────────────── */
   function renderForm1Pages(area, meta, headers, rows, order, grouped, dateRange) {
-    // cols: 0=ts,1=dt,2=responder,3=تاريخ اليوم,4=اليوم,5=#,6=نوع,7=وصف,8=بدء,9=انتهاء,10=حضور,11=غياب,12=ملاحظات
-    const WORK_COLS     = [5, 6, 7, 8, 9, 10, 11, 12];
-    const WORK_HEADERS  = WORK_COLS.map(i => headers[i] || '');
+    // cols: 0=ts,1=dt,2=responder,3=تاريخ اليوم,4=اليوم,5=#,6=نوع,7=وصف,8=المادّة,9=من/إلى,10=بدء,11=انتهاء,12=حضور,13=غياب,14=ملاحظات
+    const WORK_COLS    = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    const WORK_HEADERS = WORK_COLS.map(i => headers[i] || '');
 
     order.forEach(name => {
       const personRows = grouped[name];
@@ -750,7 +769,7 @@
       });
 
       dateOrder.forEach(date => {
-        const dayRows = byDate[date].sort((a, b) => String(a[8]||'') < String(b[8]||'') ? -1 : 1);
+        const dayRows = byDate[date].sort((a, b) => String(a[10]||'') < String(b[10]||'') ? -1 : 1);
         const weekday = dayRows[0][4] || '';
         const dh = document.createElement('div');
         dh.className = 'pf-day-header';

@@ -115,9 +115,8 @@
     .work-card-body { padding: 12px 14px; }
     .cond-field { display: none; }
     .cond-field.visible { display: block; }
-    .cond-row.visible { display: grid; }
-    .cond-row { display: none; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 480px) { .cond-row { grid-template-columns: 1fr; } }
+    .cond-non-mukht { display: none; }
+    .cond-non-mukht.visible { display: block; }
 
     .add-work-btn {
       width: 100%; padding: 11px; background: none;
@@ -252,9 +251,12 @@
   }
 
   const WORK_TYPES = [
-    'درس ساحة (1)', 'درس ساحة (2)', 'درس مقرأة المطار', 'درس مقرأة الكوم',
-    'درس مقرأة أوكتوبر', 'درس مقرأة بولاق', 'درس مقرأة العزيزية',
-    'درس مقرأة ساحة (1)', 'درس مقرأة ساحة (2)', 'حصة معهد ساحة (1)', 'حصة معهد ساحة (2)',
+    'درس ساحة (1)', 'درس ساحة (2)',
+    'درس مقرأة المطار', 'درس مقرأة الكوم', 'درس مقرأة أوكتوبر', 'درس مقرأة بولاق',
+    'درس مقرأة العزيزية', 'درس مقرأة الدّعوة', 'درس مقرأة المنيب',
+    'درس مقرأة العمرانيّة', 'درس مقرأة الرّضوان',
+    'درس مقرأة ساحة (1)', 'درس مقرأة ساحة (2)',
+    'حصة معهد ساحة (1)', 'حصة معهد ساحة (2)',
     'درس بيت حضوري', 'درس عن بعد', 'مختلف',
   ];
 
@@ -293,14 +295,24 @@
           <label class="field-label">وصف العمل</label>
           <input class="field-value" type="text" id="desc_${id}" placeholder="اكتب وصف العمل..." value="${esc(clone&&clone.desc||'')}" />
         </div>
-        <div class="cond-row" id="attendField_${id}">
+        <div class="cond-non-mukht" id="attendField_${id}">
           <div class="field">
-            <label class="field-label">الحضور <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
-            <input class="field-value" type="number" id="present_${id}" placeholder="عدد الحضور" min="0" value="${esc(clone&&clone.present||'')}" />
+            <label class="field-label">المادّة / اسم الكتاب <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+            <input class="field-value" type="text" id="book_${id}" placeholder="مثال: رياض الصالحين..." value="${esc(clone&&clone.book||'')}" />
           </div>
           <div class="field">
-            <label class="field-label">الغياب <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
-            <input class="field-value" type="number" id="absent_${id}" placeholder="عدد الغياب" min="0" value="${esc(clone&&clone.absent||'')}" />
+            <label class="field-label">من / إلى <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+            <input class="field-value" type="text" id="fromto_${id}" placeholder="مثال: صفحة ١٢ — ٢٥ ..." value="${esc(clone&&clone.fromTo||'')}" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label">الحضور <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+              <input class="field-value" type="number" id="present_${id}" placeholder="عدد الحضور" min="0" value="${esc(clone&&clone.present||'')}" />
+            </div>
+            <div class="field">
+              <label class="field-label">الغياب <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+              <input class="field-value" type="number" id="absent_${id}" placeholder="عدد الغياب" min="0" value="${esc(clone&&clone.absent||'')}" />
+            </div>
           </div>
         </div>
         <div class="field-row">
@@ -333,7 +345,7 @@
 
   function onTypeChange(id) {
     const type = document.getElementById(`type_${id}`).value;
-    document.getElementById(`descField_${id}`).classList.toggle('visible', type === 'مختلف');
+    document.getElementById(`descField_${id}`).classList.toggle('visible',     type === 'مختلف');
     document.getElementById(`attendField_${id}`).classList.toggle('visible', !!type && type !== 'مختلف');
   }
 
@@ -345,7 +357,8 @@
 
   function collectWork(id) {
     const g = (sid) => (document.getElementById(sid) || {}).value || '';
-    return { type: g(`type_${id}`), desc: g(`desc_${id}`), present: g(`present_${id}`),
+    return { type: g(`type_${id}`), desc: g(`desc_${id}`), book: g(`book_${id}`),
+             fromTo: g(`fromto_${id}`), present: g(`present_${id}`),
              absent: g(`absent_${id}`), start: g(`start_${id}`), end: g(`end_${id}`), notes: g(`notes_${id}`) };
   }
 
