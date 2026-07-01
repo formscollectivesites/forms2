@@ -349,6 +349,12 @@
              absent: g(`absent_${id}`), start: g(`start_${id}`), end: g(`end_${id}`), notes: g(`notes_${id}`) };
   }
 
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
   function showConfirm() {
     const date = document.getElementById('workDate').value;
     if (!date) { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
@@ -356,6 +362,13 @@
     if (!cards.length) { showStatus('⚠️ يرجى إضافة عمل واحد على الأقل', '#D03B3B'); return; }
     if (cards.some(c => !document.getElementById(`type_${c.dataset.wid}`).value))
       { showStatus('⚠️ يرجى اختيار نوع العمل لجميع الأعمال', '#D03B3B'); return; }
+    for (const c of cards) {
+      const wid = +c.dataset.wid;
+      const err = checkTime(document.getElementById(`start_${wid}`).value,
+                            document.getElementById(`end_${wid}`).value,
+                            c.querySelector('.work-num').textContent);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
+    }
     document.getElementById('confirmModal').classList.add('open');
   }
   function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }

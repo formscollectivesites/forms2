@@ -343,6 +343,12 @@
     return { title: g(`title_${id}`), start: g(`start_${id}`), end: g(`end_${id}`), notes: g(`notes_${id}`) };
   }
 
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
   function showConfirm() {
     const loc  = document.getElementById('locationSelect').value;
     if (!loc)  { showStatus('⚠️ يرجى اختيار الموقع', '#D03B3B'); return; }
@@ -352,6 +358,13 @@
     if (!cards.length) { showStatus('⚠️ يرجى إضافة عمل واحد على الأقل', '#D03B3B'); return; }
     const missingTitle = cards.some(c => !document.getElementById(`title_${c.dataset.wid}`).value.trim());
     if (missingTitle) { showStatus('⚠️ يرجى إدخال عنوان العمل لجميع الأعمال', '#D03B3B'); return; }
+    for (const c of cards) {
+      const wid = +c.dataset.wid;
+      const err = checkTime(document.getElementById(`start_${wid}`).value,
+                            document.getElementById(`end_${wid}`).value,
+                            c.querySelector('.work-num').textContent);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
+    }
     document.getElementById('confirmModal').classList.add('open');
   }
   function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }

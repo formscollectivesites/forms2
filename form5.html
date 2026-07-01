@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -13,295 +13,232 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      color-scheme: light;
       --brand:       #185FA5;
-      --brand-dark:  #114880;
       --brand-light: #E6F1FB;
+      --brand-dark:  #114880;
       --bg:          #F5F4F2;
       --surface:     #FFFFFF;
-      --surface-2:   #F9F9F8;
       --border:      rgba(0,0,0,0.09);
       --border-s:    rgba(0,0,0,0.14);
       --text-1:      #1A1A1A;
       --text-2:      #555550;
       --text-3:      #999994;
       --danger:      #D03B3B;
-      --danger-bg:   #FDEAEA;
-      --success:     #0F6E56;
-      --success-bg:  #E1F5EE;
-      --radius:      12px;
-      --radius-s:    8px;
     }
 
     html, body {
-      min-height: 100%;
-      background: var(--bg);
+      min-height: 100vh; background: var(--bg);
       font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
-      color: var(--text-1);
-      direction: rtl;
+      color: var(--text-1); direction: rtl;
       -webkit-font-smoothing: antialiased;
     }
 
-    .page { max-width: 700px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+    .page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
-    .header { text-align: center; margin-bottom: 2rem; }
-
-    .back-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--brand); font-size: 14px; font-weight: 500;
-      font-family: inherit; background: none; border: none;
-      cursor: pointer; margin-bottom: 1.25rem; padding: 0; text-decoration: none;
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--text-2); text-decoration: none;
+      margin-bottom: 1.25rem; font-weight: 500;
     }
-    .back-btn svg { width: 16px; height: 16px; stroke: var(--brand); }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--brand); }
 
-    .logo {
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-icon {
       width: 60px; height: 60px; background: var(--brand);
       border-radius: 16px; display: flex; align-items: center; justify-content: center;
       margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(24,95,165,0.28);
     }
-    .logo svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 1.8; }
-
-    .header h1 { font-size: clamp(18px, 4.5vw, 22px); font-weight: 700; margin-bottom: 5px; }
-    .header p  { font-size: 14px; color: var(--text-2); }
+    .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
+    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
+    .form-header p  { font-size: 13px; color: var(--text-3); }
 
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem;
     }
-    .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media (max-width: 440px) { .card-row { grid-template-columns: 1fr; } }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
+      margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
 
-    .field-label {
-      font-size: 13px; font-weight: 600; color: var(--text-2);
-      margin-bottom: 7px; display: flex; align-items: center; gap: 5px;
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .opt-tag { font-weight: 400; color: var(--text-3); }
+    .field-value {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; transition: border-color 0.15s;
     }
-    .required-star { color: var(--danger); }
-    .field-input {
-      width: 100%; padding: 11px 13px;
-      border: 1.5px solid var(--border-s); border-radius: var(--radius-s);
-      background: var(--surface-2); color: var(--text-1);
-      font-family: inherit; font-size: 15px; direction: rtl; outline: none;
-      transition: border-color 0.15s;
-    }
-    .field-input:focus { border-color: var(--brand); }
-    .field-input::placeholder { color: var(--text-3); }
+    .field-value:focus { border-color: var(--brand); }
+    .field-value::placeholder { color: var(--text-3); }
+    select.field-value { cursor: pointer; }
+    .field-value[type="date"] { direction: ltr; text-align: right; }
+    .field-value[type="time"] { direction: ltr; text-align: right; }
+    .field-value[readonly] { opacity: 0.7; cursor: default; }
 
-    .day-section {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); margin-bottom: 1rem; overflow: hidden;
+    .weekday-tag {
+      display: inline-block; background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-top: 4px;
     }
-    .day-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.9rem 1.1rem; background: var(--surface-2);
-      border-bottom: 1px solid var(--border);
-      cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
-    }
-    .day-header-right { display: flex; align-items: center; gap: 10px; }
-    .day-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .day-name { font-size: 15px; font-weight: 700; color: var(--text-1); }
-    .day-count {
-      font-size: 12px; font-weight: 500; padding: 2px 9px; border-radius: 20px;
-      background: var(--brand-light); color: var(--brand);
-    }
-    .day-chevron { width: 18px; height: 18px; stroke: var(--text-3); transition: transform 0.2s; flex-shrink: 0; }
-    .day-chevron.open { transform: rotate(180deg); }
-    .day-body { padding: 1rem 1rem 0.5rem; display: none; }
-    .day-body.open { display: block; }
+
+    /* Lesson cards */
+    .works-header { display: flex; align-items: center; margin-bottom: 10px; }
+    .works-title  { font-size: 14px; font-weight: 700; }
 
     .lesson-card {
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius-s); padding: 0.9rem; margin-bottom: 0.75rem;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 14px; margin-bottom: 10px; overflow: hidden;
     }
-    .lesson-header {
+    .lesson-head {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 0.85rem;
+      padding: 10px 14px; background: var(--brand-light); gap: 10px;
     }
-    .lesson-num {
-      font-size: 12px; font-weight: 600; color: var(--brand);
-      background: var(--brand-light); padding: 2px 10px; border-radius: 20px;
-    }
-    .remove-btn {
-      background: var(--danger-bg); border: none; border-radius: 6px;
-      color: var(--danger); cursor: pointer; padding: 4px 8px;
-      font-size: 12px; font-family: inherit; font-weight: 600;
+    .lesson-num { font-size: 12px; font-weight: 700; color: var(--brand); }
+    .lesson-btns { display: flex; gap: 6px; }
+    .lc-btn {
+      padding: 4px 10px; border-radius: 7px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
       display: flex; align-items: center; gap: 4px;
-      -webkit-tap-highlight-color: transparent;
+      transition: background 0.13s, color 0.13s;
     }
-    .remove-btn svg { width: 13px; height: 13px; stroke: var(--danger); }
+    .lc-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .lc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .lc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .lc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .lc-btn-del:hover { background: var(--danger); color: #fff; }
 
-    .f-label { font-size: 11.5px; font-weight: 600; color: var(--text-2); margin-bottom: 4px; display: block; }
-    .f-input {
-      width: 100%; padding: 9px 10px;
-      border: 1.5px solid var(--border-s); border-radius: 6px;
-      background: var(--surface); color: var(--text-1);
-      font-family: inherit; font-size: 14px; direction: rtl; outline: none;
-      transition: border-color 0.15s;
+    .lesson-body { padding: 12px 14px; }
+
+    .add-lesson-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 10px;
+      color: var(--brand); font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
     }
-    .f-input:focus { border-color: var(--brand); }
-    .f-input::placeholder { color: var(--text-3); }
-    input[type="time"].f-input   { direction: ltr; text-align: right; }
-    input[type="number"].f-input { direction: ltr; text-align: right; }
-
-    .f-textarea {
-      width: 100%; padding: 9px 10px;
-      border: 1.5px solid var(--border-s); border-radius: 6px;
-      background: var(--surface); color: var(--text-1);
-      font-family: inherit; font-size: 14px; direction: rtl; outline: none;
-      resize: vertical; min-height: 58px; transition: border-color 0.15s;
-    }
-    .f-textarea:focus { border-color: var(--brand); }
-    .f-textarea::placeholder { color: var(--text-3); }
-
-    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    @media (max-width: 420px) { .g2 { grid-template-columns: 1fr; } }
-    .mb8 { margin-bottom: 8px; }
-    .field-wrap { display: flex; flex-direction: column; }
-
-    .section-divider {
-      font-size: 11px; font-weight: 700; color: var(--text-3);
-      letter-spacing: 0.06em; border-bottom: 1px solid var(--border);
-      padding-bottom: 5px; margin: 10px 0 8px;
-    }
-
-    .add-btn {
-      display: flex; align-items: center; justify-content: center; gap: 7px;
-      width: 100%; padding: 10px;
-      border: 1.5px dashed var(--border-s); border-radius: var(--radius-s);
-      background: none; color: var(--brand);
-      font-family: inherit; font-size: 14px; font-weight: 600;
-      cursor: pointer; margin-bottom: 0.75rem;
-      transition: background 0.15s, border-color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .add-btn:hover { background: var(--brand-light); border-color: var(--brand); }
-    .add-btn svg { width: 16px; height: 16px; stroke: var(--brand); }
+    .add-lesson-btn:hover { background: var(--brand-light); }
+    .add-lesson-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
 
     .submit-btn {
       width: 100%; padding: 14px; background: var(--brand); color: #fff;
-      border: none; border-radius: var(--radius);
-      font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-top: 1.5rem; -webkit-tap-highlight-color: transparent;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
     }
-    .submit-btn:hover   { background: var(--brand-dark); }
-    .submit-btn:active  { transform: scale(0.98); }
+    .submit-btn:hover    { background: var(--brand-dark); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .spinner {
-      width: 18px; height: 18px;
-      border: 2.5px solid rgba(255,255,255,0.4); border-top-color: #fff;
-      border-radius: 50%; animation: spin 0.7s linear infinite; display: none;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .error-banner {
-      background: var(--danger-bg); color: var(--danger);
-      border-radius: var(--radius-s); padding: 11px 14px;
-      font-size: 14px; font-weight: 500; margin-top: 1rem; display: none;
+    .status-msg {
+      display: none; text-align: center; font-size: 13px; font-weight: 600;
+      padding: 10px; border-radius: 8px; margin-top: 10px;
     }
 
-    .success-screen { display: none; text-align: center; padding: 3rem 1rem; }
-    .success-icon {
-      width: 72px; height: 72px; background: var(--success-bg); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1.5rem;
     }
-    .success-icon svg { width: 34px; height: 34px; stroke: var(--success); }
-    .success-screen h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .success-screen p  { font-size: 15px; color: var(--text-2); margin-bottom: 1.75rem; }
-    .hub-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; background: var(--brand); color: #fff;
-      border: none; border-radius: var(--radius);
-      font-family: inherit; font-size: 15px; font-weight: 600;
-      cursor: pointer; text-decoration: none;
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 2rem 1.75rem; width: 100%; max-width: 360px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18); text-align: center;
     }
-
-    .dot-0{background:#534AB7} .dot-1{background:#0F6E56} .dot-2{background:#993C1D}
-    .dot-3{background:#993556} .dot-4{background:#185FA5} .dot-5{background:#3B6D11}
-    .dot-6{background:#854F0B}
+    .modal-icon {
+      width: 52px; height: 52px; background: #FFF8E6;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .modal-icon svg { width: 26px; height: 26px; stroke: #B45309; fill: none; stroke-width: 2; }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .modal-btns  { display: flex; gap: 10px; }
+    .modal-no  {
+      flex: 1; padding: 12px; border: 1.5px solid var(--border-s);
+      border-radius: 10px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-2);
+    }
+    .modal-yes {
+      flex: 1; padding: 12px; background: var(--brand); color: #fff;
+      border: none; border-radius: 10px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .modal-yes:hover { background: var(--brand-dark); }
   </style>
 </head>
 <body>
+<div class="page">
+  <a class="back-link" href="portal.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    العودة إلى البوابة
+  </a>
 
-<div class="page" id="formPage">
-
-  <div style="margin-bottom:0.5rem">
-    <a class="back-btn" href="portal.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      العودة إلى بوابة الاستمارات
-    </a>
-  </div>
-
-  <div class="header">
-    <div class="logo">
-      <svg viewBox="0 0 24 24">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
-        <path d="m9 11 2 2 4-4"/>
-      </svg>
+  <header class="form-header">
+    <div class="form-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="m9 11 2 2 4-4"/></svg>
     </div>
     <h1>استمارة مسؤول السّاحة</h1>
-    <p>أدخل بياناتك وتفاصيل دروس كل يوم</p>
-  </div>
+    <p>يُرجى تعبئة جميع الحقول بدقة</p>
+  </header>
 
-  <!-- Name + Sahah -->
+  <!-- Basic info -->
   <div class="card">
-    <div class="card-row">
-      <div>
-        <div class="field-label">اسم المسؤول</div>
-        <input class="field-input" type="text" id="responderName" readonly />
+    <div class="card-title">المعلومات الأساسيّة</div>
+    <div class="field">
+      <label class="field-label">اسم المسؤول</label>
+      <input class="field-value" type="text" id="responderName" readonly />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">اسم السّاحة</label>
+        <select class="field-value" id="sahahSelect">
+          <option value="">— اختر الساحة —</option>
+          <option value="ساحة (1)">ساحة (1)</option>
+          <option value="ساحة (2)">ساحة (2)</option>
+        </select>
       </div>
-      <div>
-        <div class="field-label">اسم السّاحة <span class="required-star">*</span></div>
-        <input class="field-input" type="text" id="sahahName" placeholder="أدخل اسم الساحة" />
+      <div class="field">
+        <label class="field-label">تاريخ اليوم</label>
+        <input class="field-value" type="date" id="workDate" oninput="onDateChange()" />
+        <div id="weekdayTag" class="weekday-tag" style="display:none"></div>
       </div>
     </div>
   </div>
 
-  <div id="daysContainer"></div>
-
-  <button class="submit-btn" id="submitBtn" onclick="showConfirm()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="18" height="18">
-      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-    </svg>
-    <span id="submitLabel">إرسال الاستمارة</span>
-    <div class="spinner" id="spinner"></div>
+  <!-- Lessons -->
+  <div class="works-header"><span class="works-title">الدّروس</span></div>
+  <div id="lessonList"></div>
+  <button class="add-lesson-btn" onclick="addLesson()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة درس
   </button>
 
-  <div class="error-banner" id="errorBanner"></div>
+  <button class="submit-btn" onclick="showConfirm()">إرسال الاستمارة</button>
+  <div class="status-msg" id="statusMsg"></div>
 </div>
 
-<div class="success-screen" id="successScreen">
-  <div class="success-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-  </div>
-  <h2>تم الإرسال بنجاح! 🎉</h2>
-  <p>تم حفظ بيانات استمارة مسؤول السّاحة في السجل.</p>
-  <a class="hub-btn" href="portal.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="16" height="16">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-    </svg>
-    العودة إلى بوابة الاستمارات
-  </a>
-</div>
-
-<!-- Confirmation Modal -->
-<div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center;padding:1.5rem">
-  <div style="background:#fff;border-radius:18px;padding:2rem 1.75rem;width:100%;max-width:360px;box-shadow:0 8px 40px rgba(0,0,0,0.18);text-align:center">
-    <div style="width:52px;height:52px;background:#FFF8E6;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#B45309" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
     </div>
-    <div style="font-size:17px;font-weight:700;margin-bottom:6px">هل راجعت البيانات قبل الاستمرار؟</div>
-    <div style="font-size:13px;color:#555550;margin-bottom:1.5rem">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
-    <div style="display:flex;gap:10px">
-      <button onclick="closeConfirm()" style="flex:1;padding:12px;border:1.5px solid rgba(0,0,0,0.14);border-radius:10px;background:none;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;color:#555550">لا، مراجعة</button>
-      <button onclick="confirmSubmit()" style="flex:1;padding:12px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer">نعم، إرسال</button>
+    <div class="modal-title">هل راجعت البيانات قبل الاستمرار؟</div>
+    <div class="modal-sub">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
+    <div class="modal-btns">
+      <button class="modal-no"  onclick="closeConfirm()">لا، مراجعة</button>
+      <button class="modal-yes" onclick="confirmSubmit()">نعم، إرسال</button>
     </div>
   </div>
 </div>
 
 <script>
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxoQ_WHVfd9FyzDHoLzZrTCoUOYQts66YuBNTdlEiKOe1Vem8kzpeF7qN96xM5_Q2eE/exec";
   const FORM_ID   = "مسؤول السّاحة";
 
   const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
@@ -309,213 +246,160 @@
   const RESPONDER_NAME = _user ? _user.full_name : '';
   document.getElementById('responderName').value = RESPONDER_NAME;
 
-  const DAYS = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-  const counters = DAYS.map(() => 0);
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 
-  function buildDays() {
-    const container = document.getElementById('daysContainer');
-    DAYS.forEach((day, di) => {
-      const sec = document.createElement('div');
-      sec.className = 'day-section';
-      sec.id = `day-${di}`;
-      sec.innerHTML = `
-        <div class="day-header" onclick="toggleDay(${di})">
-          <div class="day-header-right">
-            <div class="day-dot dot-${di}"></div>
-            <span class="day-name">${day}</span>
-            <span class="day-count" id="count-${di}">٠ دروس</span>
-          </div>
-          <svg class="day-chevron" id="chev-${di}" viewBox="0 0 24 24" fill="none" stroke-width="2">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </div>
-        <div class="day-body" id="body-${di}">
-          <div id="lessons-${di}"></div>
-          <button class="add-btn" onclick="addLesson(${di})">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-            إضافة درس
+  function onDateChange() {
+    const val = document.getElementById('workDate').value;
+    const tag = document.getElementById('weekdayTag');
+    if (!val) { tag.style.display = 'none'; return; }
+    tag.textContent = WEEKDAYS[new Date(val).getDay()];
+    tag.style.display = 'inline-block';
+  }
+
+  let lessonCounter = 0;
+  function toAr(n) { return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
+  function esc(s)  { return String(s||'').replace(/"/g,'&quot;'); }
+
+  /* Time validator: returns error string or null */
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
+  function addLesson(clone) {
+    lessonCounter++;
+    const id = lessonCounter;
+    const div = document.createElement('div');
+    div.className = 'lesson-card';
+    div.dataset.lid = id;
+    div.innerHTML = `
+      <div class="lesson-head">
+        <span class="lesson-num">درس ${toAr(id)}</span>
+        <div class="lesson-btns">
+          <button class="lc-btn lc-btn-dup" onclick="duplicateLesson(${id})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="lc-btn lc-btn-del" onclick="removeLesson(${id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
           </button>
         </div>
-      `;
-      container.appendChild(sec);
-      addLesson(di);
+      </div>
+      <div class="lesson-body">
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">وقت البدء</label>
+            <input class="field-value" type="time" id="lstart_${id}" value="${esc(clone&&clone.start||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">وقت الانتهاء</label>
+            <input class="field-value" type="time" id="lend_${id}" value="${esc(clone&&clone.end||'')}" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">اسم الكتاب</label>
+          <input class="field-value" type="text" id="lbook_${id}" placeholder="أدخل اسم الكتاب..."
+            value="${esc(clone&&clone.book||'')}" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">عدد الحضور <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="lpresent_${id}" placeholder="0" min="0"
+              value="${esc(clone&&clone.present||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">عدد الغياب <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="labsent_${id}" placeholder="0" min="0"
+              value="${esc(clone&&clone.absent||'')}" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">ملاحظات <span class="opt-tag">(اختياري)</span></label>
+          <input class="field-value" type="text" id="lnotes_${id}" placeholder="ملاحظات إضافية..."
+            value="${esc(clone&&clone.notes||'')}" />
+        </div>
+      </div>`;
+    document.getElementById('lessonList').appendChild(div);
+    refreshNums();
+  }
+
+  function removeLesson(id) {
+    const el = document.querySelector(`.lesson-card[data-lid="${id}"]`);
+    if (el) el.remove();
+    refreshNums();
+  }
+
+  function duplicateLesson(id) { addLesson(collectLesson(id)); }
+
+  function refreshNums() {
+    document.querySelectorAll('.lesson-card').forEach((c, i) => {
+      c.querySelector('.lesson-num').textContent = 'درس ' + toAr(i + 1);
     });
   }
 
-  function toggleDay(di) {
-    document.getElementById(`body-${di}`).classList.toggle('open');
-    document.getElementById(`chev-${di}`).classList.toggle('open');
-  }
-
-  function addLesson(di) {
-    counters[di]++;
-    const li = counters[di];
-    const container = document.getElementById(`lessons-${di}`);
-
-    const card = document.createElement('div');
-    card.className = 'lesson-card';
-    card.id = `lesson-${di}-${li}`;
-    card.innerHTML = `
-      <div class="lesson-header">
-        <span class="lesson-num">درس ${toAr(li)}</span>
-        ${li > 1 ? `<button class="remove-btn" onclick="removeLesson(${di},${li})">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>حذف
-        </button>` : ''}
-      </div>
-
-      <div class="g2 mb8">
-        <div class="field-wrap">
-          <label class="f-label">وقت البدء <span class="required-star">*</span></label>
-          <input class="f-input" type="time" data-day="${di}" data-lesson="${li}" data-field="start" />
-        </div>
-        <div class="field-wrap">
-          <label class="f-label">وقت الانتهاء <span class="required-star">*</span></label>
-          <input class="f-input" type="time" data-day="${di}" data-lesson="${li}" data-field="end" />
-        </div>
-      </div>
-
-      <div class="field-wrap mb8">
-        <label class="f-label">اسم الكتاب <span class="required-star">*</span></label>
-        <input class="f-input" type="text" placeholder="أدخل اسم الكتاب"
-          data-day="${di}" data-lesson="${li}" data-field="book" />
-      </div>
-
-      <div class="section-divider">الحضور والغياب</div>
-      <div class="g2 mb8">
-        <div class="field-wrap">
-          <label class="f-label">عدد الحضور <span class="required-star">*</span></label>
-          <input class="f-input" type="number" min="0" placeholder="0"
-            data-day="${di}" data-lesson="${li}" data-field="present" />
-        </div>
-        <div class="field-wrap">
-          <label class="f-label">عدد الغياب <span class="required-star">*</span></label>
-          <input class="f-input" type="number" min="0" placeholder="0"
-            data-day="${di}" data-lesson="${li}" data-field="absent" />
-        </div>
-      </div>
-
-      <div class="field-wrap">
-        <label class="f-label">ملاحظات <span style="color:var(--text-3);font-weight:400">(اختياري)</span></label>
-        <textarea class="f-textarea" placeholder="أي ملاحظات إضافية..."
-          data-day="${di}" data-lesson="${li}" data-field="notes"></textarea>
-      </div>
-    `;
-    container.appendChild(card);
-    document.getElementById(`body-${di}`).classList.add('open');
-    document.getElementById(`chev-${di}`).classList.add('open');
-    updateCount(di);
-  }
-
-  function removeLesson(di, li) {
-    const el = document.getElementById(`lesson-${di}-${li}`);
-    if (el) el.remove();
-    updateCount(di);
-  }
-
-  function updateCount(di) {
-    const n = document.querySelectorAll(`#lessons-${di} .lesson-card`).length;
-    document.getElementById(`count-${di}`).textContent =
-      toAr(n) + (n === 1 ? ' درس' : ' دروس');
-  }
-
-  function toAr(n) {
-    return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
-  }
-
-  function collectData() {
-    const responder = RESPONDER_NAME;
-    const sahah = document.getElementById('sahahName').value.trim();
-    if (!sahah) return { error: 'يرجى إدخال اسم السّاحة' };
-
-    const days = [];
-    let hasAny = false;
-
-    for (let di = 0; di < DAYS.length; di++) {
-      const cards = document.querySelectorAll(`#lessons-${di} .lesson-card`);
-      const lessons = [];
-
-      for (const card of cards) {
-        const g = f => card.querySelector(`[data-field="${f}"]`).value.trim();
-        const start   = g('start');
-        const end     = g('end');
-        const book    = g('book');
-        const present = g('present');
-        const absent  = g('absent');
-        const notes   = g('notes');
-
-        if (!start && !end && !book && !present && !absent) continue;
-
-        const dayName = DAYS[di];
-        if (!start)          return { error: `يرجى إدخال وقت البدء — ${dayName}` };
-        if (!end)            return { error: `يرجى إدخال وقت الانتهاء — ${dayName}` };
-        if (!book)           return { error: `يرجى إدخال اسم الكتاب — ${dayName}` };
-        if (present === '')  return { error: `يرجى إدخال عدد الحضور — ${dayName}` };
-        if (absent  === '')  return { error: `يرجى إدخال عدد الغياب — ${dayName}` };
-
-        lessons.push({ start, end, book, present, absent, notes });
-        hasAny = true;
-      }
-
-      days.push({ day: DAYS[di], lessons });
-    }
-
-    if (!hasAny) return { error: 'يرجى إضافة درس واحد على الأقل' };
-    return { formId: FORM_ID, responder, sahah, days, timestamp: new Date().toLocaleString('ar-EG') };
+  function collectLesson(id) {
+    const g = sid => (document.getElementById(sid)||{}).value||'';
+    return { start: g(`lstart_${id}`), end: g(`lend_${id}`), book: g(`lbook_${id}`),
+             present: g(`lpresent_${id}`), absent: g(`labsent_${id}`), notes: g(`lnotes_${id}`) };
   }
 
   function showConfirm() {
-    const data = collectData();
-    if (data.error) {
-      const banner = document.getElementById('errorBanner');
-      banner.textContent = '⚠️ ' + data.error;
-      banner.style.display = 'block';
-      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+    const sahah = document.getElementById('sahahSelect').value;
+    if (!sahah) { showStatus('⚠️ يرجى اختيار اسم الساحة', '#D03B3B'); return; }
+    const date  = document.getElementById('workDate').value;
+    if (!date)  { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
+    const cards = [...document.querySelectorAll('.lesson-card')];
+    if (!cards.length) { showStatus('⚠️ يرجى إضافة درس واحد على الأقل', '#D03B3B'); return; }
+
+    // Time validation
+    for (const c of cards) {
+      const lid   = +c.dataset.lid;
+      const start = document.getElementById(`lstart_${lid}`).value;
+      const end   = document.getElementById(`lend_${lid}`).value;
+      const err   = checkTime(start, end, c.querySelector('.lesson-num').textContent);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
     }
-    const m = document.getElementById('confirmModal');
-    m.style.display = 'flex';
+
+    document.getElementById('confirmModal').classList.add('open');
   }
-  function closeConfirm() { document.getElementById('confirmModal').style.display = 'none'; }
-  function confirmSubmit() { closeConfirm(); submitForm(); }
+  function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
 
-  async function submitForm() {
-    const banner = document.getElementById('errorBanner');
-    banner.style.display = 'none';
-
-    const data = collectData();
-    if (data.error) {
-      banner.textContent = '⚠️ ' + data.error;
-      banner.style.display = 'block';
-      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-
-    const btn     = document.getElementById('submitBtn');
-    const label   = document.getElementById('submitLabel');
-    const spinner = document.getElementById('spinner');
+  async function confirmSubmit() {
+    closeConfirm();
+    const btn = document.querySelector('.submit-btn');
     btn.disabled = true;
-    label.textContent = 'جاري الإرسال...';
-    spinner.style.display = 'block';
+    showStatus('⏳ جاري الإرسال...', 'var(--text-2)');
+
+    const date    = document.getElementById('workDate').value;
+    const weekday = WEEKDAYS[new Date(date).getDay()];
+    const sahah   = document.getElementById('sahahSelect').value;
+    const lessons = [...document.querySelectorAll('.lesson-card')].map(c => collectLesson(+c.dataset.lid));
 
     try {
       await fetch(SHEET_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ formId: FORM_ID, timestamp: new Date().toLocaleString('ar-EG'),
+          responder: RESPONDER_NAME, sahah, date, weekday, lessons }),
       });
-      document.getElementById('formPage').style.display = 'none';
-      document.getElementById('successScreen').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
-      banner.textContent = '❌ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.';
-      banner.style.display = 'block';
+      showStatus('✅ تم الإرسال بنجاح!', '#0F6E56');
+      setTimeout(() => { window.location.href = 'portal.html'; }, 1600);
+    } catch {
+      showStatus('❌ حدث خطأ. حاول مجدداً.', '#D03B3B');
       btn.disabled = false;
-      label.textContent = 'إرسال الاستمارة';
-      spinner.style.display = 'none';
     }
   }
 
-  buildDays();
+  function showStatus(msg, color) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg; el.style.color = color;
+    el.style.background = color.startsWith('#') ? color + '18' : '#F5F4F2';
+    el.style.display = 'block';
+  }
+
+  document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+  onDateChange();
+  addLesson();
 </script>
 </body>
 </html>
