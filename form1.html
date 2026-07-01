@@ -366,7 +366,7 @@
       const wid = +c.dataset.wid;
       const err = checkTime(document.getElementById(`start_${wid}`).value,
                             document.getElementById(`end_${wid}`).value,
-                            c.querySelector('.work-num').textContent);
+                            c.querySelector('.work-card-num').textContent);
       if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
     }
     document.getElementById('confirmModal').classList.add('open');
